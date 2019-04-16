@@ -10,7 +10,7 @@ import Cart from './Cart'
 const RouterComp = (props) => {
   return(
     <Switch>
-      <Route path='/cart' render={(renderProps) => <Cart books={props.books} cart={props.cart} user={props.user} checkout={props.checkout} /> } />
+      <Route path='/cart' render={(renderProps) => <Cart credits={props.credits} books={props.books} cart={props.cart} user={props.user} checkout={props.checkout} /> } />
       <Route path='/books' render={(renderProps) => {
           return < BookContainer books={props.books} getBook={props.getBook}/>
       }} />

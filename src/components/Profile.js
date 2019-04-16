@@ -1,11 +1,11 @@
 import React from 'react'
-import Book from './Book'
+import ShowBook from './ShowBook'
 import '../stylesheets/profile.scss'
 
 class Profile extends React.Component {
 
   generateBookCards = () => {
-    return this.props.user.user.donated_books.map(book => <Book book={book}/>)
+    return this.props.user.user.donated_books.map(book => <ShowBook book={book}/>)
   }
 
   render(){

@@ -16,12 +16,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-
     let token = localStorage.getItem('token')
     if(token) {
       fetch('http://localhost:4000/current_user', { headers: { Authorization: `Bearer ${token}` } })
       .then( r => r.json() )
-      .then( data => this.setState({ currentUser: data }, () => {
+      .then( data => this.setState({ currentUser: data, credits: data.user.credits }, () => {
         fetch('http://localhost:4000/books')
         .then(res => res.json())
         .then(apiBooks => {
@@ -46,8 +45,9 @@ class App extends Component {
 
 
   checkout = () => {
-    let copyStateBooks = [...this.state.books]
+    let userID = this.state.currentUser.user.id
 
+    let copyStateBooks = [...this.state.books]
     let cartBookIds = this.state.cart.map(book => {
       return book.id
     })
@@ -57,6 +57,47 @@ class App extends Component {
           return book
         }
     })
+
+    let token = localStorage.getItem('token')
+
+    let configObj = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json',
+         Authorization: `Bearer ${token}`
+      }
+    }
+
+    let patchConfigObj = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json',
+         Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({credits: this.state.currentUser.user.credits - 1})
+    }
+
+    // this.setState({ books: filteredBooks })
+    cartBookIds.forEach(id => {
+      fetch(`http://localhost:4000/${id}`, configObj)
+      .then( r => r.json() )
+      .then( res => {
+        this.setState({ books: filteredBooks, cart: [] }, () => {
+          fetch(`http://localhost:4000/${userID}`, patchConfigObj)
+          .then( r => r.json() )
+          .then(updatedUser => {
+
+              this.setState({credits: this.state.credits - 1})
+          })
+        })
+      } )
+    })
+
+
+
+
   }
 
   handleSignup = (event, userData) => {
@@ -103,6 +144,7 @@ class App extends Component {
 
 
   render() {
+    
     return (
       <React.Fragment>
         <NavBar />
@@ -114,6 +156,7 @@ class App extends Component {
         cart={this.state.cart}
         getBook={this.getBook}
         checkout={this.checkout}
+        credits={this.state.credits}
         />
       </React.Fragment>
     );

@@ -5,13 +5,15 @@ const About = () => {
   return (
     <React.Fragment>
     <section className="main-about">
-    <h1>About the Project</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt enim vitae odio lacinia, ac faucibus ante viverra. Phasellus molestie felis gravida, pharetra arcu nec, congue tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent diam magna, tempor efficitur sem et, imperdiet malesuada mi. Aenean a ante in libero finibus tempus. Phasellus id tristique sapien. Curabitur imperdiet ante mi, sit amet dapibus dui vestibulum non. Donec pulvinar lacus lectus, in malesuada tortor dignissim nec. Donec dapibus urna quis neque posuere sodales. Sed placerat turpis et luctus pellentesque. Vestibulum laoreet feugiat porttitor. Nam vitae mi maximus, laoreet dui at, venenatis mi. Vestibulum rutrum faucibus tortor nec gravida. Fusce ante leo, bibendum quis luctus quis, fermentum ut dui. Vestibulum erat dui, porta sed augue sed, commodo volutpat nunc.
-    </p>
-    <p>Nam vitae urna orci. Praesent egestas dolor elit, in sagittis justo ultrices vulputate. Pellentesque porta, purus vel pulvinar vestibulum, nulla lacus laoreet nibh, a finibus nisi purus viverra odio. Curabitur sed velit sit amet mauris tincidunt varius nec sit amet tortor. Suspendisse in ornare elit. Curabitur eget odio dolor. Nullam varius odio nec enim sollicitudin eleifend. Praesent ac magna nec sapien ornare condimentum nec in ipsum. Nullam vel velit odio. Curabitur ut tellus mi. Proin id mollis massa. Donec vel metus arcu. Nullam consectetur pulvinar imperdiet.
+    <h1>Welcome to BookTrade</h1>
+    <p>
+    BookTrade is an exchange portal for books! The mission is to encourage reuse of books that are not being used and to expand literary knowledge and enjoyment among users.
     </p>
     <p>
-    Aliquam tortor augue, convallis ac quam at, mollis convallis velit. Nulla non arcu aliquam, bibendum lacus vel, mollis tellus. Suspendisse vitae diam non ipsum tempus lacinia in vitae mauris. Aenean vel sagittis magna, vitae varius metus. Praesent ex quam, eleifend et ipsum quis, lacinia imperdiet mauris. Cras dapibus consequat venenatis. Integer turpis nunc, pellentesque non auctor vel, auctor quis dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+    If you have books that you wish to donate to other readers, for every book you add for donation on our site, you gain a credit that you can use to acquire a donated book from another user. Simply browse our library and look for books you wish to have. You will fill out your shipping information and the other user will ship you the book.
+    </p>
+    <p>
+    Please note that all users handle their own shipping costs. You will be responsible for shipping any books that you are donating.
     </p>
     </section>
 

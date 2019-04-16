@@ -1,13 +1,12 @@
 import React from 'react'
 
 const ShowBook = (props) => {
-
  return (
    <div className="book-card" >
       <img src={props.book.imageURL} alt="" />
      <p> {props.book.title} </p>
       <span>by {props.book.authors} </span>
-      {props.cart ? <button>Remove From Cart</button> : null}
+      {props.cart ? <button onClick={() => props.removeBook(props.book.id)}>Remove From Cart</button> : null}
    </div>
  )
 }

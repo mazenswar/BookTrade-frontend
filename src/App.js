@@ -43,9 +43,20 @@ class App extends Component {
     }
   }
 
+  removeBook = (id) => {
+    let stateCopy = [...this.state.cart]
+    let filteredBooks = stateCopy.filter(book => book.id !== id)
+    this.setState({
+      cart: filteredBooks
+    })
+  }
 
-  checkout = () => {
+
+  checkout = (e) => {
+    e.preventDefault()
     let userID = this.state.currentUser.user.id
+    let address = e.target.name.value + "\n" + e.target.address.value + '\n' + e.target.city.value + ', ' + e.target.territory.value + ' ' + e.target.zipcode.value
+    console.log(address)
 
     let copyStateBooks = [...this.state.books]
     let cartBookIds = this.state.cart.map(book => {
@@ -144,7 +155,7 @@ class App extends Component {
 
 
   render() {
-    
+
     return (
       <React.Fragment>
         <NavBar />
@@ -157,6 +168,7 @@ class App extends Component {
         getBook={this.getBook}
         checkout={this.checkout}
         credits={this.state.credits}
+        removeBook={this.removeBook}
         />
       </React.Fragment>
     );

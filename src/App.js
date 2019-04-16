@@ -24,7 +24,7 @@ class App extends Component {
         fetch('http://localhost:4000/books')
         .then(res => res.json())
         .then(apiBooks => {
-          this.setState({ books: apiBooks })
+          this.setState({ books: apiBooks }, () => console.log(this.state.books))
         })
       })
       )
@@ -45,7 +45,9 @@ class App extends Component {
 
   handleDonation = (book) => {
     let bookStateCopy = [book, ...this.state.books]
-    this.setState({books: bookStateCopy})
+    let userCopy = {...this.state.currentUser}
+    userCopy.user.donated_books.push(book)
+    this.setState({currentUser: userCopy, books: bookStateCopy})
   }
 
   removeBook = (id) => {
@@ -56,7 +58,7 @@ class App extends Component {
     })
   }
 
-  addingBookManually = (e) => {
+  addingBookManually = (e, condition) => {
     e.preventDefault()
     let configObj = {
       method: "POST",
@@ -71,6 +73,7 @@ class App extends Component {
         publishDate: e.target.publishDate.value,
         description: e.target.description.value,
         imageURL: e.target.imageUrl.value,
+        condition: condition,
         user_id: this.state.currentUser.user.id
       })
     }

@@ -14,7 +14,8 @@ class BookDonateForm extends React.Component {
    publisher: '',
    publishDate: '',
    description: '',
-   imageUrl: ''
+   imageUrl: '',
+   condition: 'Good (G)'
  }
 
  changeHandler = (e) => {
@@ -45,6 +46,7 @@ class BookDonateForm extends React.Component {
 
  handleSubmit = (e) => {
     e.preventDefault()
+    let book_condition = e.target.condition.value
     let isbn = e.target.isbn.value
     fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
     .then(r => r.json()).then(res => {
@@ -57,7 +59,8 @@ class BookDonateForm extends React.Component {
             publishDate: res.items[0].volumeInfo.publishedDate,
             description: res.items[0].volumeInfo.description,
             imageURL: res.items[0].volumeInfo.imageLinks.thumbnail,
-            isbn: isbn
+            isbn: isbn,
+            book_condition: book_condition
            }
            this.setState({ book: bookObj}, () => console.log(this.state.book))
       }
@@ -69,7 +72,9 @@ class BookDonateForm extends React.Component {
 
  }
 
- confirmSubmission = (id) => {
+ confirmSubmission = (e, id) => {
+   let book = this.state.book
+   e.preventDefault()
    let configObj = {
      method: "POST",
      headers: {
@@ -77,18 +82,31 @@ class BookDonateForm extends React.Component {
        'Accept': 'application/json'
      },
      body: JSON.stringify({
-       book: this.state.book,
-       user_id: id
+       user_id: id,
+       book: {...this.state.book}
      })
    }
 
    fetch("http://localhost:4000/books", configObj)
    .then(res => res.json())
    .then(book => {
+     console.log(book, "book after fetch")
      this.props.handleDonation(book)
      alert("Thanks for you submission!")
      this.props.history.push('/books')
    })
+ }
+
+ bookConditionSelect = (e) => {
+   return (
+     <select name="condition">
+      <option>Fine/Like New (F)</option>
+      <option>Very Good (VG)</option>
+      <option>Good (G)</option>
+      <option>Fair (FR)</option>
+      <option>Poor (P)</option>
+     </select>
+   )
  }
 
  render(){
@@ -103,17 +121,18 @@ class BookDonateForm extends React.Component {
        </div> : ''}
        {this.state.isbnForm ? <div><h3>Please enter the ISBN number without dashes</h3><form onSubmit={this.handleSubmit}>
          <input name="isbn" placeholder="isbn#" onChange={this.changeHandler} value={this.state.isbn.value}/>
+         <label>Select Book Condition</label>{this.bookConditionSelect()}
          <input type="submit" value="submit" />
        </form></div> : ''}
 
-       {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><Book book={this.state.book}/> <h2>Click yes to confirm donation</h2> <button onClick={() => this.confirmSubmission(this.props.user.user.id)}>Yes</button></div>: ""}
+       {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><Book book={this.state.book}/> <h2>Click yes to confirm donation</h2> <form onSubmit={(e) => this.confirmSubmission(e, this.props.user.user.id)}><input type='submit' value="Yes"/></form></div>: ""}
 
 
 
        {this.state.nonIsbnForm ?
          <div>
          <h3>We weren't able to find your edition of your book by ISBN number. Please enter information manually.</h3>
-         <form onSubmit={this.props.addingBookManually}>
+         <form onSubmit={(e) => this.props.addingBookManually(e, this.state.condition)}>
            <input name="title" placeholder="title" onChange={this.changeHandler} value={this.state.title.value} required/>
            <input name="authors" placeholder="authors" onChange={this.changeHandler} value={this.state.authors.value} required/>
            <input name="publisher" placeholder="publisher" onChange={this.changeHandler} value={this.state.publisher.value} required/>
@@ -122,6 +141,7 @@ class BookDonateForm extends React.Component {
            <input name="imageUrl" placeholder="imageUrl" onChange={this.changeHandler} value={this.state.imageUrl.value} required/>
            <input name="isbn" placeholder="isbn" onChange={this.changeHandler} value={this.state.isbn.value} required/>
            <input type="submit" value="Confirm Book Submission"/>
+           {this.bookConditionSelect()}
          </form>
          </div>: ""}
 

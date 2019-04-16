@@ -7,6 +7,8 @@ const Book = (props) => {
       <img src={props.book.imageURL} alt="" />
      <p> {props.book.title} </p>
       <span>by {props.book.authors} </span>
+      {console.log(props)}
+      <span>Condition: {props.book.book_condition} </span>
      <button onClick={() => props.getBook(props.book)}>Add to cart</button>
    </div>
  )

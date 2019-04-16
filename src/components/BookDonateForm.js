@@ -2,6 +2,7 @@ import React from 'react'
 import Book from './Book'
 import { Route, Redirect } from 'react-router'
 import { withRouter } from "react-router-dom"
+import '../stylesheets/donate.scss'
 
 class BookDonateForm extends React.Component {
  state = {
@@ -112,7 +113,7 @@ class BookDonateForm extends React.Component {
  render(){
 
    return (
-     <div>
+     <div className="donation-container">
      <button onClick={this.donateClickHelper}>Donate A Book!</button>
        {this.state.donate ? <div>
        <h3>Do you have ISBN number for the book?</h3>
@@ -122,7 +123,7 @@ class BookDonateForm extends React.Component {
        {this.state.isbnForm ? <div><h3>Please enter the ISBN number without dashes</h3><form onSubmit={this.handleSubmit}>
          <input name="isbn" placeholder="isbn#" onChange={this.changeHandler} value={this.state.isbn.value}/>
          <label>Select Book Condition</label>{this.bookConditionSelect()}
-         <input type="submit" value="submit" />
+         <input className="submit" type="submit" value="submit" />
        </form></div> : ''}
 
        {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><Book book={this.state.book}/> <h2>Click yes to confirm donation</h2> <form onSubmit={(e) => this.confirmSubmission(e, this.props.user.user.id)}><input type='submit' value="Yes"/></form></div>: ""}
@@ -132,7 +133,7 @@ class BookDonateForm extends React.Component {
        {this.state.nonIsbnForm ?
          <div>
          <h3>We weren't able to find your edition of your book by ISBN number. Please enter information manually.</h3>
-         <form onSubmit={(e) => this.props.addingBookManually(e, this.state.condition)}>
+         <form id="custom-form" onSubmit={(e) => this.props.addingBookManually(e, this.state.condition)}>
            <input name="title" placeholder="title" onChange={this.changeHandler} value={this.state.title.value} required/>
            <input name="authors" placeholder="authors" onChange={this.changeHandler} value={this.state.authors.value} required/>
            <input name="publisher" placeholder="publisher" onChange={this.changeHandler} value={this.state.publisher.value} required/>
@@ -140,7 +141,7 @@ class BookDonateForm extends React.Component {
            <input name="description" placeholder="description" onChange={this.changeHandler} value={this.state.description.value} required/>
            <input name="imageUrl" placeholder="imageUrl" onChange={this.changeHandler} value={this.state.imageUrl.value} required/>
            <input name="isbn" placeholder="isbn" onChange={this.changeHandler} value={this.state.isbn.value} required/>
-           <input type="submit" value="Confirm Book Submission"/>
+           <input className="submit" type="submit" value="Confirm Book Submission"/>
            {this.bookConditionSelect()}
          </form>
          </div>: ""}

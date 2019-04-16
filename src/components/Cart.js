@@ -18,7 +18,7 @@ class Cart extends React.Component {
   checkOutButton = () => {
     const componentsArray = this.generateBookComponents()
       if (this.props.user.user && componentsArray !== undefined) {
-        return this.props.user.user.credits >= componentsArray.length ? <input type="submit" value="Submit" /> : <h1>You do not have enough credit to checkout</h1>
+        return this.props.user.user.credits >= componentsArray.length ? <input className="submit" type="submit" value="Submit" /> : <h1>You do not have enough credit to checkout</h1>
       }
   }
 

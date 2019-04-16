@@ -21,3 +21,20 @@ $brown: #392f2f;
     font-size: 2vw;
   }
 }
+button {
+  padding: 1vw;
+  margin: 2vw;
+  border-radius: 20px;
+  font-size: 1vw;
+  background-color: $dark-green;
+  color: $background-beige;
+}
+input {
+  padding: 1vw;
+  border-radius: 30px;
+  font-size: 1.5vw;
+}
+.submit {
+  background-color:$dark-green;
+  color: $background-beige;
+}

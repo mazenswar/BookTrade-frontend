@@ -1,0 +1,50 @@
+$background-beige: #e6d3a7;
+$dark-green: #3a7563;
+$light-green: #59a985;
+$brown: #392f2f;
+
+.donation-container {
+  padding: 4vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  button {
+    padding: 2vw;
+    font-size: 2.5vw;
+  }
+  input {
+    padding: 1vw;
+    border-radius: 30px;
+    font-size: 1.5vw;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 40vh;
+}
+
+#custom-form {
+  height: 60vh;
+}
+
+.submit {
+  background-color:$dark-green;
+  color: $background-beige;
+}
+
+select {
+  background-color: $dark-green;
+  color: $background-beige;
+  width: 20vw;
+  height: 4vw;
+  font-size: 1.5vw;
+}
+
+
+
+select:focus {outline:0;}

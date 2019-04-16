@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
+$blue1: #e2eff1;
+$blue2: #b6d5e1;
+$blue3: #65799b;
+$purple: #65799b;
+$background-beige: #e6d3a7;
+$dark-green: #3a7563;
+$light-green: #59a985;
+$brown: #392f2f;
+
+
+
+#root {
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $background-beige;
+  color: $brown;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+button {
+  padding: 1vw;
+  margin: 2vw;
+  border-radius: 20px;
+  font-size: 1vw;
+  background-color: $dark-green;
+  color: $background-beige;
+}
+
+a { text-decoration: none; }
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: $dark-green;
+  height: 8vw;
+  top: 0;
+  width: 100%;
+  font-size: 2vw;
+
+  a {
+    color: $background-beige;
+    transition: 0.8s;
+    height: 100%;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a:hover {
+    background-color: $light-green;
+  }
+
+  .nav-no-hover:hover{
+    background-color: $dark-green;
+  }
+
+}
+
+.profile-icon {
+  border-radius: 100%;
+  width: 4vw;
+  height: 4vw;
+}
+
+
+
+.book-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#book-container-header {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5vw;
+  color: $dark-green;
+}
+
+.book-card {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw;
+  border: 2px solid $dark-green;
+  width: 20vw;
+  margin: 1vw;
+  border-radius: 20px;
+  transition: 0.8s;
+  img {
+    border-radius: 10px;
+    width: 60%;
+  }
+  p {
+    padding: 0;
+    font-size: 1.7vw;
+    width: 60%;
+    text-align: center;
+  }
+  span {
+    font-style: italic;
+  }
+}
+
+
+.book-card:hover {
+  background-color: $light-green;
+  border: none;
+  color: $background-beige;
+}
+
+.main-page-container {
+  grid-template-columns: 60% 40%;
+}
+
+
+.main-about {
+  padding: 2vw 10vw;
+  font-size: 1.5vw;
+  text-align: justify;
+  h1 {
+    color: $dark-green;
+  }
+}
+
+.main-links-container {
+  margin-bottom: 5vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.main-links {
+ font-size: 2.5vw;
+ width: 30vw;
+ height: 15vw;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ transition: 0.8s;
+
+ a {
+   color: $dark-green;
+   transition: 0.4s;
+ }
+
+}
+
+
+.left {
+  border-left: 1px solid $light-green;
+}
+
+
+
+.main-links:hover {
+  background-color: $brown;
+  a {
+    color: $background-beige;
+  }
+}

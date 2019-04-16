@@ -1,0 +1,23 @@
+$blue1: #e2eff1;
+$blue2: #b6d5e1;
+$blue3: #65799b;
+$purple: #65799b;
+$background-beige: #e6d3a7;
+$dark-green: #3a7563;
+$light-green: #59a985;
+$brown: #392f2f;
+
+.profile-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  h1 {
+    font-size: 3vw;
+  }
+  h2{
+    font-size: 2vw;
+  }
+}

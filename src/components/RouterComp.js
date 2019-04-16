@@ -14,7 +14,7 @@ const RouterComp = (props) => {
       <Route path='/books' render={(renderProps) => {
           return < BookContainer books={props.books} getBook={props.getBook}/>
       }} />
-      <Route path='/donate' render={(renderProps) => <BookDonateForm user={ {...props.user} }/> }/>
+      <Route path='/donate' render={(renderProps) => <BookDonateForm handleDonation={props.handleDonation} addingBookManually={props.addingBookManually} user={ {...props.user} }/> }/>
       <Route path='/home' component={Home} />
       <Route path='/profile' render={(renderProps) => <Profile user={props.user}/>}/>
       <Route path='/' render={(renderProps) => {

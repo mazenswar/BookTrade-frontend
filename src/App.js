@@ -43,11 +43,42 @@ class App extends Component {
     }
   }
 
+  handleDonation = (book) => {
+    let bookStateCopy = [book, ...this.state.books]
+    this.setState({books: bookStateCopy})
+  }
+
   removeBook = (id) => {
     let stateCopy = [...this.state.cart]
     let filteredBooks = stateCopy.filter(book => book.id !== id)
     this.setState({
       cart: filteredBooks
+    })
+  }
+
+  addingBookManually = (e) => {
+    e.preventDefault()
+    let configObj = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        title: e.target.title.value,
+        authors: e.target.authors.value,
+        publisher: e.target.publisher.value,
+        publishDate: e.target.publishDate.value,
+        description: e.target.description.value,
+        imageURL: e.target.imageUrl.value,
+        user_id: this.state.currentUser.user.id
+      })
+    }
+    fetch('http://localhost:4000/books', configObj)
+    .then(res => res.json())
+    .then(res => {
+      this.handleDonation(res)
+      this.props.history.push('/books')
     })
   }
 
@@ -169,6 +200,8 @@ class App extends Component {
         checkout={this.checkout}
         credits={this.state.credits}
         removeBook={this.removeBook}
+        handleDonation={this.handleDonation}
+        addingBookManually={this.addingBookManually}
         />
       </React.Fragment>
     );

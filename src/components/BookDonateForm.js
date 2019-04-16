@@ -1,9 +1,20 @@
 import React from 'react'
 import Book from './Book'
+import { Route, Redirect } from 'react-router'
+import { withRouter } from "react-router-dom"
 
 class BookDonateForm extends React.Component {
  state = {
    book: {},
+   isbn: '',
+   isbnForm: false,
+   nonIsbnForm: false,
+   title: '',
+   authors: '',
+   publisher: '',
+   publishDate: '',
+   description: '',
+   imageUrl: ''
  }
 
  changeHandler = (e) => {
@@ -37,7 +48,9 @@ class BookDonateForm extends React.Component {
     let isbn = e.target.isbn.value
     fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
     .then(r => r.json()).then(res => {
-        let bookObj = {
+      let bookObj = {}
+      if (res.items !== undefined && res.items[0].volumeInfo.imageLinks !== undefined){
+         bookObj = {
             title: res.items[0].volumeInfo.title,
             authors: res.items[0].volumeInfo.authors[0],
             publisher: res.items[0].volumeInfo.publisher,
@@ -47,7 +60,13 @@ class BookDonateForm extends React.Component {
             isbn: isbn
            }
            this.setState({ book: bookObj}, () => console.log(this.state.book))
-        })
+      }
+      else {
+        this.setState({nonIsbnForm: true})
+      }
+    })
+
+
  }
 
  confirmSubmission = (id) => {
@@ -66,7 +85,9 @@ class BookDonateForm extends React.Component {
    fetch("http://localhost:4000/books", configObj)
    .then(res => res.json())
    .then(book => {
-     console.log(book)
+     this.props.handleDonation(book)
+     alert("Thanks for you submission!")
+     this.props.history.push('/books')
    })
  }
 
@@ -78,29 +99,35 @@ class BookDonateForm extends React.Component {
        {this.state.donate ? <div>
        <h3>Do you have ISBN number for the book?</h3>
        <button onClick={this.yesClickHelper}>Yes</button>
-       <button onClick={this.noClickHelper}>No</button>
+       <button onClick={this.noClickHelper}>No, I will manually input book information</button>
        </div> : ''}
-       {this.state.isbnForm ? <form onSubmit={this.handleSubmit}>
+       {this.state.isbnForm ? <div><h3>Please enter the ISBN number without dashes</h3><form onSubmit={this.handleSubmit}>
          <input name="isbn" placeholder="isbn#" onChange={this.changeHandler} value={this.state.isbn.value}/>
          <input type="submit" value="submit" />
-       </form> : ''}
+       </form></div> : ''}
 
        {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><Book book={this.state.book}/> <h2>Click yes to confirm donation</h2> <button onClick={() => this.confirmSubmission(this.props.user.user.id)}>Yes</button></div>: ""}
 
 
 
-       {this.state.nonIsbnForm ? <form>
-           <input name="title" placeholder="title" onChange={this.changeHandler} value={this.state.title.value}/>
-           <input name="authors" placeholder="authors" onChange={this.changeHandler} value={this.state.authors.value}/>
-           <input name="publisher" placeholder="publisher" onChange={this.changeHandler} value={this.state.publisher.value}/>
-           <input name="publishDate" placeholder="publishDate" onChange={this.changeHandler} value={this.state.publishDate.value}/>
-           <input name="description" placeholder="description" onChange={this.changeHandler} value={this.state.description.value}/>
-           <input name="imageUrl" placeholder="imageUrl" onChange={this.changeHandler} value={this.state.imageUrl.value}/>
-           <input type="submit" value="Donate Book"/>
-         </form> : ""}
+       {this.state.nonIsbnForm ?
+         <div>
+         <h3>We weren't able to find your edition of your book by ISBN number. Please enter information manually.</h3>
+         <form onSubmit={this.props.addingBookManually}>
+           <input name="title" placeholder="title" onChange={this.changeHandler} value={this.state.title.value} required/>
+           <input name="authors" placeholder="authors" onChange={this.changeHandler} value={this.state.authors.value} required/>
+           <input name="publisher" placeholder="publisher" onChange={this.changeHandler} value={this.state.publisher.value} required/>
+           <input name="publishDate" placeholder="publishDate" onChange={this.changeHandler} value={this.state.publishDate.value} required/>
+           <input name="description" placeholder="description" onChange={this.changeHandler} value={this.state.description.value} required/>
+           <input name="imageUrl" placeholder="imageUrl" onChange={this.changeHandler} value={this.state.imageUrl.value} required/>
+           <input name="isbn" placeholder="isbn" onChange={this.changeHandler} value={this.state.isbn.value} required/>
+           <input type="submit" value="Confirm Book Submission"/>
+         </form>
+         </div>: ""}
+
      </div>
    )
  }
 }
 
-export default BookDonateForm
+export default withRouter(BookDonateForm)

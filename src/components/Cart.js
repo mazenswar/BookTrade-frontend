@@ -25,7 +25,7 @@ class Cart extends React.Component {
   shippingFormChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
-    }, console.log(this.state))
+    })
   }
 
   render(){

@@ -12,7 +12,8 @@ class App extends Component {
   state = {
     currentUser: '',
     books: [],
-    cart: []
+    cart: [],
+    users: []
   }
 
   componentDidMount() {
@@ -24,7 +25,13 @@ class App extends Component {
         fetch('http://localhost:4000/books')
         .then(res => res.json())
         .then(apiBooks => {
-          this.setState({ books: apiBooks }, () => console.log(this.state.books))
+          this.setState({ books: apiBooks }, () => {
+            fetch('http://localhost:4000/users')
+            .then(res => res.json())
+            .then(users => {
+              this.setState({users: users}, () => console.log(this.state.users))
+            })
+          })
         })
       })
       )
@@ -92,10 +99,47 @@ class App extends Component {
     let address = e.target.name.value + "\n" + e.target.address.value + '\n' + e.target.city.value + ', ' + e.target.territory.value + ' ' + e.target.zipcode.value
     console.log(address)
 
+
     let copyStateBooks = [...this.state.books]
     let cartBookIds = this.state.cart.map(book => {
       return book.id
     })
+
+    let donatedMatches = this.state.cart.map(book => {
+      let bookMatches = this.state.users.map(user => {
+        let foundBook = user.donated_books.find(userBook => {
+          console.log(userBook.title, "userbook", book.title, "book")
+          return ((userBook.title === book.title) && (userBook.book_condition === book.book_condition)  && userBook.address === null)
+        })
+        return foundBook.id
+        console.log(foundBook, "foundbook")
+      })
+      console.log(bookMatches, "bookmatches")
+      let match = bookMatches.find(book => {
+        return book !== undefined
+      })
+      console.log(match)
+      return match
+    })
+    // let donatedIds = donatedMatches.map(book => {
+    //   return book.id
+    // })
+
+    let patchDonatedObj = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json',
+         Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({address: address})
+    }
+    console.log(patchDonatedObj, "config for address")
+    donatedMatches.forEach(donatedId => {
+      fetch(`http://localhost:4000/donated_books/${donatedId}`, patchDonatedObj)
+    })
+
+
 
     let filteredBooks = copyStateBooks.filter(book => {
         if (!cartBookIds.includes(book.id)){

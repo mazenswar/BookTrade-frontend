@@ -5,10 +5,11 @@ import '../stylesheets/profile.scss'
 class Profile extends React.Component {
 
   generateBookCards = () => {
-    return this.props.user.user.donated_books.map(book => <ShowBook book={book}/>)
+    return this.props.user.user.donated_books.map(book => <ShowBook book={book} address={book.address}/>)
   }
 
   render(){
+
     return (
       <React.Fragment>
       <div className="profile-header">
@@ -19,6 +20,7 @@ class Profile extends React.Component {
       <div className="book-container">
         {this.props.user.user === undefined ? " " : this.generateBookCards()}
       </div>
+    
       </React.Fragment>
     )
   }

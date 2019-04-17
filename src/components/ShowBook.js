@@ -7,6 +7,7 @@ const ShowBook = (props) => {
      <p> {props.book.title} </p>
       <span>by {props.book.authors} </span>
       <span>Condition {props.book.book_condition} </span>
+      {props.book.address !== null ? <span> <h3>Book has been ordered! Please ship to address: </h3><p>{props.book.address} </p> <button>Mark as shipped</button></span>: <h3>No one has ordered this yet</h3>}
       {props.cart ? <button onClick={() => props.removeBook(props.book.id)}>Remove From Cart</button> : null}
    </div>
  )

@@ -91,7 +91,6 @@ class BookDonateForm extends React.Component {
    fetch("http://localhost:4000/books", configObj)
    .then(res => res.json())
    .then(book => {
-     console.log(book, "book after fetch")
      this.props.handleDonation(book)
      alert("Thanks for you submission!")
      this.props.history.push('/books')

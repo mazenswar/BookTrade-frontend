@@ -13,7 +13,8 @@ class App extends Component {
     currentUser: '',
     books: [],
     cart: [],
-    users: []
+    users: [],
+    credits: ''
   }
 
   componentDidMount() {
@@ -53,8 +54,9 @@ class App extends Component {
   handleDonation = (book) => {
     let bookStateCopy = [book, ...this.state.books]
     let userCopy = {...this.state.currentUser}
+    console.log(userCopy, "usercopy")
     userCopy.user.donated_books.push(book)
-    this.setState({currentUser: userCopy, books: bookStateCopy})
+    this.setState({currentUser: userCopy, books: bookStateCopy, credits: this.state.credits + 1})
   }
 
   removeBook = (id) => {
@@ -106,23 +108,15 @@ class App extends Component {
     let donatedMatches = this.state.cart.map(book => {
       let bookMatches = this.state.users.map(user => {
         let foundBook = user.donated_books.find(userBook => {
-
           return ((userBook.title === book.title) && (userBook.book_condition === book.book_condition)  && userBook.address === null)
         })
-        console.log(foundBook, "foundBook?")
         return foundBook
-        console.log(foundBook, "foundbook")
       })
-      console.log(bookMatches, "bookmatches")
       let match = bookMatches.find(book => {
         return book !== undefined
       })
-      console.log(match, "match")
       return match
     })
-    // let donatedIds = donatedMatches.map(book => {
-    //   return book.id
-    // })
 
     let patchDonatedObj = {
       method: 'PATCH',
@@ -134,7 +128,6 @@ class App extends Component {
       body: JSON.stringify({address: address})
     }
 
-    console.log(patchDonatedObj, "config for address")
     donatedMatches.forEach(donatedId => {
       fetch(`http://localhost:4000/users/${donatedId.user_id}/donated_books/${donatedId.id}`, patchDonatedObj)
     })

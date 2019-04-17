@@ -1,4 +1,4 @@
-##BookTrade
+## BookTrade
 
 Welcome to BookTrade! BookTrade is app that seeks to solve an issue of people who have too many books that they have read too many times and not enough books they have not read. Users can list their books for donation and they gain credit when they do. When a user adds a book by isbn number, the app makes a request to GoogleAPIs to get information about the books. Once a user has credits, they may browse the library of books for books that others are willing to donate. From there, a user can order a book with their credits. They submit their mailing address and then that information appears on the list on book of a user donating that book so it can be mailed to them. Users are responsible for mailing all of their own donations.
 

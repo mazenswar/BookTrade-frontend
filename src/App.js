@@ -97,8 +97,6 @@ class App extends Component {
     e.preventDefault()
     let userID = this.state.currentUser.user.id
     let address = e.target.name.value + "\n" + e.target.address.value + '\n' + e.target.city.value + ', ' + e.target.territory.value + ' ' + e.target.zipcode.value
-    console.log(address)
-
 
     let copyStateBooks = [...this.state.books]
     let cartBookIds = this.state.cart.map(book => {
@@ -108,17 +106,18 @@ class App extends Component {
     let donatedMatches = this.state.cart.map(book => {
       let bookMatches = this.state.users.map(user => {
         let foundBook = user.donated_books.find(userBook => {
-          console.log(userBook.title, "userbook", book.title, "book")
+
           return ((userBook.title === book.title) && (userBook.book_condition === book.book_condition)  && userBook.address === null)
         })
-        return foundBook.id
+        console.log(foundBook, "foundBook?")
+        return foundBook
         console.log(foundBook, "foundbook")
       })
       console.log(bookMatches, "bookmatches")
       let match = bookMatches.find(book => {
         return book !== undefined
       })
-      console.log(match)
+      console.log(match, "match")
       return match
     })
     // let donatedIds = donatedMatches.map(book => {
@@ -130,13 +129,14 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json',
         'Accepts': 'application/json',
-         Authorization: `Bearer ${token}`
+         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({address: address})
     }
+
     console.log(patchDonatedObj, "config for address")
     donatedMatches.forEach(donatedId => {
-      fetch(`http://localhost:4000/donated_books/${donatedId}`, patchDonatedObj)
+      fetch(`http://localhost:4000/users/${donatedId.user_id}/donated_books/${donatedId.id}`, patchDonatedObj)
     })
 
 

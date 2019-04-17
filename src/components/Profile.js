@@ -13,14 +13,14 @@ class Profile extends React.Component {
     return (
       <React.Fragment>
       <div className="profile-header">
-        <h1>Name: {this.props.user.user === undefined ? '' : this.props.user.user.username}</h1>
+        <h1>{this.props.user.user === undefined ? '' : this.props.user.user.username}</h1>
         <h2>Credits: {this.props.user.user === undefined ? " " : this.props.user.user.credits}</h2>
         <h2>Donated Books</h2>
       </div>
       <div className="book-container">
         {this.props.user.user === undefined ? " " : this.generateBookCards()}
       </div>
-    
+
       </React.Fragment>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import Book from './Book'
+import BlankBook from './BlankBook'
 import { Route, Redirect } from 'react-router'
 import { withRouter } from "react-router-dom"
 import '../stylesheets/donate.scss'
@@ -126,7 +126,7 @@ class BookDonateForm extends React.Component {
          <input className="submit" type="submit" value="submit" />
        </form></div> : ''}
 
-       {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><Book book={this.state.book}/> <h2>Click yes to confirm donation</h2> <form onSubmit={(e) => this.confirmSubmission(e, this.props.user.user.id)}><input type='submit' value="Yes"/></form></div>: ""}
+       {this.state.book.title !== undefined ? <div><h2>Is this the book you are donating?</h2><BlankBook book={this.state.book}/> <h2>Click yes to confirm donation</h2> <form onSubmit={(e) => this.confirmSubmission(e, this.props.user.user.id)}><input type='submit' value="Yes"/></form></div>: ""}
 
 
 

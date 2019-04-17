@@ -232,11 +232,19 @@ class App extends Component {
   }
 
 
+  handleLogout = () => {
+    this.setState({
+      currentUser: ''
+    })
+    localStorage.clear()
+    this.props.history.push('/')
+  }
+
   render() {
 
     return (
       <React.Fragment>
-        <NavBar />
+        <NavBar handleLogout={this.handlLogout}/>
         <RouterComp
         user={this.state.currentUser}
         books={this.state.books}

@@ -33,7 +33,7 @@ button {
   color: $background-beige;
 }
 
-button:focus { outline: 0; }
+input:focus, button:focus { outline: 0; }
 
 
 a { text-decoration: none; }
@@ -65,6 +65,13 @@ nav {
     background-color: $dark-green;
   }
 
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-icon {
@@ -105,7 +112,7 @@ nav {
   img {
     border-radius: 10px;
     width: 60%;
-    height: 45%;
+    height: 55%;
   }
   p {
     padding: 0;
